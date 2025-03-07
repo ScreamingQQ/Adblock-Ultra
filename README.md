@@ -1,2 +1,0 @@
-# Adblock-Ultra
-Blocks ads

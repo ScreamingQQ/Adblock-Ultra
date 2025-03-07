@@ -1,0 +1,23 @@
+[
+    "*://*.doubleclick.net/*",
+    "*://*.googlesyndication.com/*",
+    "*://*.adsense.com/*",
+    "*://*.criteo.com/*",
+    "*://*.rubiconproject.com/*",
+    "*://*.pubmatic.com/*",
+    "*://*.adform.net/*",
+    "*://*.yieldmanager.com/*",
+    "*://*.adtechus.com/*",
+    "*://*.openx.net/*",
+    "*://*.appnexus.com/*",
+    "*://*.media.net/*",
+    "*://*.outbrain.com/*",
+    "*://*.taboola.com/*",
+    "*://*.revcontent.com/*",
+    "*://*.unrulymedia.com/*",
+    "*://*.adroll.com/*",
+    "*://*.bidvertiser.com/*",
+    "*://*.infolinks.com/*",
+    "*://*.zergnet.com/*"
+  ]
+  
