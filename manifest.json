@@ -1,18 +1,39 @@
 {
   "manifest_version": 3,
-  "name": "Ultimate Adblocker",
-  "author":"FTA Associations",
-  "version": "1.0.0",
+  "name": "Adblock Ultra",
+  "version": "1.0",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
   "permissions": [
-      "declarativeNetRequest"
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "activeTab"
   ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
   "declarative_net_request": {
-      "rule_resources": [
-          {
-              "id": "ruleset_1",
-              "enabled": true,
-              "path": "rules.json"
-          }
-      ]
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  
+  "content_scripts": [
+  {
+    "matches": ["*://*/*"],
+    "js": ["content-script.js"]
   }
+]
+
 }
