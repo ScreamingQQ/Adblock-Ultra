@@ -1,21 +1,18 @@
 {
-    "manifest_version": 3,
-    "name": "Ultimate Adblocker",
-    "version": "1.0",
-    "description": "Blocks intrusive ads automatically.",
-    "permissions": ["declarativeNetRequest"],
-    "host_permissions": ["<all_urls>"],
-    "declarative_net_request": {
+  "manifest_version": 3,
+  "name": "Ultimate Adblocker",
+  "author":"FTA Associations",
+  "version": "1.0.0",
+  "permissions": [
+      "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
       "rule_resources": [
-        {
-          "id": "adblock_rules",
-          "enabled": true,
-          "path": "rules.json"
-        }
+          {
+              "id": "ruleset_1",
+              "enabled": true,
+              "path": "rules.json"
+          }
       ]
-    },
-    "background": {
-      "service_worker": "background.js"
-    }
   }
-  
+}
