@@ -2,22 +2,22 @@
   "manifest_version": 3,
   "name": "Adblock Ultra",
   "version": "1.0",
-  "background": {
-    "service_worker": "service-worker.js"
-  },
+  "description": "An advanced adblocker with smarter popup detection, privacy protection, and ad removal.",
+
   "permissions": [
     "tabs",
     "webNavigation",
+    "webRequest",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "activeTab"
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
     "*://*/*"
   ],
-  "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon.png"
+  "background": {
+    "service_worker": "service-worker.js"
   },
   "declarative_net_request": {
     "rule_resources": [
@@ -28,12 +28,18 @@
       }
     ]
   },
-  
   "content_scripts": [
-  {
-    "matches": ["*://*/*"],
-    "js": ["content-script.js"]
-  }
-]
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
 
+  "web_accessible_resources": [
+    {
+      "resources": ["icon16.png", "icon48.png", "icon128.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
