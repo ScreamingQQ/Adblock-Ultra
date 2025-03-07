@@ -1,19 +1,10 @@
 {
-    "manifest_version": 3,
-    "name": "Ultimate AdBlocker",
+    "name": " Ultimate Adblocker",
     "version": "1.0",
-    "permissions": ["declarativeNetRequest", "scripting", "tabs"],
-    "host_permissions": ["<all_urls>"],
-    "declarative_net_request": {
-        "rule_resources": [
-            {
-                "id": "default_rules",
-                "enabled": true,
-                "path": "rules.json"
-            }
-        ]
-    },
+    "description": "Blocks as many ads as possible",
+    "permissions": ["webRequest", "webRequestBlocking", "<all_urls>"],
     "background": {
-        "service_worker": "background.js"
-    }
+        "scripts": ["background.js"]
+    },
+    "manifest_version": 2
 }
