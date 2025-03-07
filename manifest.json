@@ -2,7 +2,18 @@
     "name": " Ultimate Adblocker",
     "version": "1.0",
     "description": "Blocks as many ads as possible",
-    "permissions": ["webRequest", "webRequestBlocking", "<all_urls>"],
+   "permissions": [
+  "webRequest",
+  "webRequestBlocking",
+  "scripting",
+  "tabs",
+  "<all_urls>"
+],
+"host_permissions": [
+  "*://*.youtube.com/*",
+  "*://*.googlevideo.com/*"
+],
+
     "background": {
         "scripts": ["background.js"]
     },

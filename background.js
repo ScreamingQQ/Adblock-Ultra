@@ -900,3 +900,106 @@ chrome.webRequest.onBeforeRequest.addListener(
     { urls: defaultFilters },
     ["blocking"]
 )
+
+// Encrypt and decrypt selectors to make detection harder
+function decryptSelectors(encryptedSelectors) {
+    return encryptedSelectors.map(selector =>
+        selector.split("").reverse().join("") // Simple reverse obfuscation
+    );
+}
+
+// Encrypted ad-related selectors
+const encryptedAdSelectors = [
+    "renrednar-yalpsid-dty", // ytd-display-ad-renderer
+    "resulevda-dtp", // promoted-video-renderer
+    "delya-reyalp-da-pyt" // ytp-ad-player-overlay
+];
+
+// Decrypt the selectors dynamically
+const adSelectors = decryptSelectors(encryptedAdSelectors);
+
+// Real-time DOM mutation observer to remove ad elements stealthily
+function stealthAdRemover() {
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(() => {
+            adSelectors.forEach(selector => {
+                document.querySelectorAll(selector).forEach(el => el.remove());
+            });
+        });
+    });
+
+    // Observe the body for all DOM changes
+    observer.observe(document.body, { childList: true, subtree: true });
+    console.log("Stealth ad remover activated.");
+}
+
+// Network-level blocking with randomized headers and advanced filtering
+chrome.webRequest.onBeforeRequest.addListener(
+    function (details) {
+        const adPatterns = [
+            "get_video_info?*adformat*",
+            "api/stats/ads*",
+            "videoplayback?*ad*",
+            "youtubei/v1/log_event*"
+        ];
+        if (adPatterns.some(pattern => details.url.includes(pattern))) {
+            console.log(`Blocked ad request: ${details.url}`);
+            return { cancel: true };
+        }
+        return { cancel: false };
+    },
+    { urls: ["<all_urls>"] },
+    ["blocking"]
+);
+
+// Randomize headers to obfuscate traffic patterns
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function (details) {
+        const headers = details.requestHeaders;
+
+        // Replace the "Referer" header with randomized legit-looking URLs
+        const refererIndex = headers.findIndex(header => header.name.toLowerCase() === "referer");
+        if (refererIndex >= 0) {
+            headers[refererIndex].value = `https://www.youtube.com/?v=${Math.random().toString(36).substring(2)}`;
+        } else {
+            headers.push({ name: "Referer", value: `https://www.youtube.com/?v=${Math.random().toString(36).substring(2)}` });
+        }
+
+        // Randomize the User-Agent to rotate through legitimate values
+        const userAgentIndex = headers.findIndex(header => header.name.toLowerCase() === "user-agent");
+        if (userAgentIndex >= 0) {
+            headers[userAgentIndex].value = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36";
+        } else {
+            headers.push({
+                name: "User-Agent",
+                value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+            });
+        }
+
+        return { requestHeaders: headers };
+    },
+    { urls: ["<all_urls>"] },
+    ["blocking", "requestHeaders"]
+);
+
+// Response header modification to suppress ad metadata
+chrome.webRequest.onHeadersReceived.addListener(
+    function (details) {
+        details.responseHeaders = details.responseHeaders.filter(header =>
+            !["x-ad-count", "x-ad-break-info"].includes(header.name.toLowerCase())
+        );
+        return { responseHeaders: details.responseHeaders };
+    },
+    { urls: ["<all_urls>"] },
+    ["blocking", "responseHeaders"]
+);
+
+// Inject stealth DOM manipulator when a YouTube page is fully loaded
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "complete" && tab.url.includes("youtube.com")) {
+        chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            function: stealthAdRemover
+        });
+    }
+});
