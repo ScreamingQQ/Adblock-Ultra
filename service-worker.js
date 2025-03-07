@@ -30,22 +30,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-// Apply filter rules dynamically based on navigation
-chrome.webNavigation.onBeforeNavigate.addListener(() => {
-  chrome.declarativeNetRequest.updateDynamicRules({
-    addRules: [
-      {
-        id: 201,
-        priority: 1,
-        action: { type: "block" },
-        condition: { urlFilter: "*://*example.com/ads/*", resourceTypes: ["main_frame"] }
-      }
-    ],
-    removeRuleIds: [201]
-  });
-  console.log("Dynamic rules updated.");
-});
-
 // Log request details for debugging
 function logRequest(details, isBlocked) {
   console.log(`Request URL: ${details.url}, Type: ${details.type}, Blocked: ${isBlocked}`);
@@ -62,16 +46,27 @@ function isSuspiciousURL(url) {
   return isAd;
 }
 
-// Dynamic request blocking
-chrome.webRequest.onBeforeRequest.addListener(
-  (details) => {
-    const isBlocked = isSuspiciousURL(details.url);
-    logRequest(details, isBlocked);
-    return { cancel: isBlocked };
-  },
-  { urls: ["<all_urls>"], types: ["main_frame", "sub_frame"] },
-  ["blocking"]
-);
+// Replace unsupported webRequest with declarativeNetRequest
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.declarativeNetRequest.updateDynamicRules({
+    addRules: [
+      {
+        id: 1,
+        priority: 1,
+        action: { type: "block" },
+        condition: { urlFilter: "*://*ads/*", resourceTypes: ["main_frame", "sub_frame"] }
+      },
+      {
+        id: 2,
+        priority: 1,
+        action: { type: "block" },
+        condition: { urlFilter: "*://*popup/*", resourceTypes: ["main_frame", "sub_frame"] }
+      }
+    ],
+    removeRuleIds: [1, 2]
+  });
+  console.log("DeclarativeNetRequest rules added.");
+});
 
 // Advanced popup detection via content script messages
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
