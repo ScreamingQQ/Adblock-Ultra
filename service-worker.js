@@ -1,6 +1,12 @@
 // Cache to optimize performance
 const urlCache = new Set();
-const adPatterns = [/ads?/i, /popup/i, /tracking/i, /click/i, /marketing/i];
+const adPatterns = [
+  /\bads?\b/i,          // Matches "ad" or "ads" as standalone words
+  /\bpopup\b/i,         // Matches "popup" as a standalone word
+  /\btracking\b/i,      // Matches "tracking" as a standalone word
+  /\bclick\b/i,         // Matches "click" as a standalone word
+  /\bmarketing\b/i      // Matches "marketing" as a standalone word
+];
 
 // Detect when a new tab is created
 chrome.tabs.onCreated.addListener((tab) => {
@@ -24,8 +30,10 @@ chrome.webNavigation.onCompleted.addListener((details) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "blockWebRTC") {
     const { url } = message;
-    const isBlocked = /ads|track|analytics/.test(url);
-    if (isBlocked) console.log(`Blocked WebRTC Request: ${url}`);
+    const isBlocked = /\bads?|track|analytics\b/.test(url);
+    if (isBlocked) {
+      console.log(`Blocked WebRTC Request: ${url}`);
+    }
     sendResponse({ isBlocked });
   }
 });
