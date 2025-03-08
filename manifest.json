@@ -38,6 +38,19 @@
       "resources": ["icon16.png", "icon48.png", "icon128.png"],
       "matches": ["<all_urls>"]
     }
-  ]
-  
+  ],
+  "action": {
+    "default_title": "Adblock Ultra",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
 }

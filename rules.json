@@ -998,6 +998,137 @@
         "condition": {
             "urlFilter": "*://*medialets.com/*"
         }
+    },
+    
+    {
+        "id": 101,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*bing.com/api/v1/mediation/*"
+        }
+    },
+    {
+        "id": 102,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*microsoftadvertising.com/*"
+        }
+    },
+    {
+        "id": 103,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*msads.net/*"
+        }
+    },
+    {
+        "id": 104,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*microsoftadvertisingapi.com/*"
+        }
+    },
+    {
+        "id": 105,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*ad.microsoft.com/*"
+        }
+    },
+    {
+        "id": 106,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*bingads.microsoft.com/*"
+        }
+    },
+    {
+        "id": 107,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*microsoftadcenter.com/*"
+        }
+    },
+    {
+        "id": 108,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*ads.microsoftedge.com/*"
+        }
+    },
+    {
+        "id": 109,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*clarity.ms/*"
+        }
+    },
+    {
+        "id": 110,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*msnads.com/*"
+        }
+    },
+    {
+        "id": 111,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*msads.microsoft.com/*"
+        }
+    },
+    {
+        "id": 112,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*ad.doubleclick.net/microsoft/*"
+        }
+    },
+    {
+        "id": 113,
+        "priority": 1,
+        "action": {
+            "type": "block"
+        },
+        "condition": {
+            "urlFilter": "*://*a.ads.microsoft.net/*"
+        }
     }
     
     
